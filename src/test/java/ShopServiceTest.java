@@ -1,4 +1,4 @@
-import exceptions.NoSuchOrderException;
+import exceptions.NoSuchProductException;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -37,7 +37,7 @@ class ShopServiceTest {
         List<String> productsIds = List.of("1", "2");
 
         //THEN
-        assertThrowsExactly(NoSuchOrderException.class, () -> shopService.addOrder(productsIds));
+        assertThrowsExactly(NoSuchProductException.class, () -> shopService.addOrder(productsIds));
     }
 
     @Test
@@ -94,7 +94,7 @@ class ShopServiceTest {
         OrderStatus newStatus = OrderStatus.IN_DELIVERY;
 
         //THEN
-        assertThrowsExactly(NoSuchOrderException.class,
+        assertThrowsExactly(NoSuchProductException.class,
                             () -> shopService.updateOrderStatus(invalidOrderId, newStatus));
     }
 }

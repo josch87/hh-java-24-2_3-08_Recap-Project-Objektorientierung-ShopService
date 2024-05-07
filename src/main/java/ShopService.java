@@ -1,7 +1,5 @@
-import exceptions.NoSuchOrderException;
+import exceptions.NoSuchProductException;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 import java.time.Instant;
@@ -9,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -24,7 +21,7 @@ public class ShopService {
             Optional<Product> productToOrder = productRepo.getProductById(productId);
             if (productToOrder.isEmpty()) {
                 System.out.println("Product mit der Id: " + productId + " konnte nicht bestellt werden!");
-                throw new NoSuchOrderException("Product with Id " + productId + " not found.");
+                throw new NoSuchProductException("Product with Id " + productId + " not found.");
             }
             products.add(productToOrder.get());
         }
