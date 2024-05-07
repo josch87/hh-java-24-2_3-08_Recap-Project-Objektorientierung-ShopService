@@ -104,4 +104,42 @@ class ShopServiceTest {
                             () -> shopService.updateOrderStatus(invalidOrderId, newStatus));
         assertEquals("Order with Id -1 not found.", exception.getMessage());
     }
+
+    @Test
+    void getOldestOrderPerStatusTest_whenFourOrders_expectOldest() {
+        //GIVEN
+        ProductRepo productRepo = new ProductRepo();
+        productRepo.addProduct(new Product("1", "Apfel"));
+        OrderRepo orderRepo = new OrderMapRepo();
+        IdService idService = new IdService();
+        ShopService shopService = new ShopService(productRepo, orderRepo, idService);
+
+        Order expected = shopService.addOrder(List.of("1", "1"));
+        shopService.addOrder(List.of("1"));
+        shopService.addOrder(List.of("1", "1", "1"));
+        shopService.addOrder(List.of("1", "1"));
+
+        // WHEN
+        Order actual = shopService.getOldestOrderPerStatus(OrderStatus.PROCESSING);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void getOldestOrderPerStatusTest_whenNoOrdersForOrderStatus_expectException() {
+        //GIVEN
+        ProductRepo productRepo = new ProductRepo();
+        productRepo.addProduct(new Product("1", "Apfel"));
+        OrderRepo orderRepo = new OrderMapRepo();
+        IdService idService = new IdService();
+        ShopService shopService = new ShopService(productRepo, orderRepo, idService);
+
+        Order expected = shopService.addOrder(List.of("1", "1"));
+        shopService.addOrder(List.of("1"));
+        shopService.addOrder(List.of("1", "1", "1"));
+        shopService.addOrder(List.of("1", "1"));
+
+        // WHEN
+        RuntimeException exception = assertThrowsExactly(RuntimeException.class, () -> shopService.getOldestOrderPerStatus(OrderStatus.IN_DELIVERY));
+        assertEquals("There are no orders with status " + OrderStatus.IN_DELIVERY, exception.getMessage());
+    }
 }

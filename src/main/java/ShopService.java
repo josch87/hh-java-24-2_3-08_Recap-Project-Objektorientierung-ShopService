@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.ToString;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -45,5 +42,16 @@ public class ShopService {
         return orderRepo.getOrders().stream()
                 .filter((order) -> order.status().equals(orderStatus))
                 .collect(Collectors.toList());
+    }
+
+    public Order getOldestOrderPerStatus(OrderStatus orderStatus) {
+        List<Order> sortedAndFilteredOrders = getOrdersByOrderStatus(orderStatus).stream()
+                .sorted(Comparator.comparing(Order::orderedAt))
+                .toList();
+
+            if (sortedAndFilteredOrders.isEmpty()) {
+                throw new RuntimeException("There are no orders with status " + orderStatus);
+            }
+        return sortedAndFilteredOrders.get(0);
     }
 }
