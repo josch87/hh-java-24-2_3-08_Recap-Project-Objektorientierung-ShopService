@@ -53,4 +53,31 @@ class ShopServiceTest {
         assertEquals(expectedLength, actual.size());
         assertEquals(updatedOrder1.id(), actual.get(0).id());
     }
+
+    @Test
+    void updateOrderStatusTest_whenOrderExists_expectStatusUpdated() {
+        //GIVEN
+        ShopService shopService = new ShopService();
+        List<String> productsIds = List.of("1");
+        Order order1 = shopService.addOrder(productsIds);
+        OrderStatus newStatus = OrderStatus.IN_DELIVERY;
+
+        //WHEN
+        Order actual = shopService.updateOrderStatus(order1.id(), newStatus);
+
+        //THEN
+        assertEquals(newStatus, actual.status());
+    }
+
+    @Test
+    void updateOrderStatusTest_whenOrderDoesNotExist_expectException() {
+        //GIVEN
+        ShopService shopService = new ShopService();
+        String invalidOrderId = "-1";
+        OrderStatus newStatus = OrderStatus.IN_DELIVERY;
+
+        //THEN
+        assertThrowsExactly(NoSuchOrderException.class,
+                            () -> shopService.updateOrderStatus(invalidOrderId, newStatus));
+    }
 }
