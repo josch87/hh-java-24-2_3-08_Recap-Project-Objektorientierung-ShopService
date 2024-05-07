@@ -1,3 +1,4 @@
+import exceptions.NoSuchOrderException;
 import exceptions.NoSuchProductException;
 import lombok.AllArgsConstructor;
 import lombok.ToString;
@@ -32,8 +33,8 @@ public class ShopService {
     }
 
     public Order updateOrderStatus(String orderId, OrderStatus status) {
-        Order orderToUpdate = orderRepo.getOrderById(orderId);
-        Order updatedOrder = orderToUpdate.withStatus(status);
+        Optional<Order> orderToUpdate = orderRepo.getOrderById(orderId);
+        Order updatedOrder = orderToUpdate.orElseThrow(() -> new NoSuchOrderException("Order with Id " + orderId + " not found.")).withStatus(status);
         orderRepo.removeOrder(orderId);
         orderRepo.addOrder(updatedOrder);
         return updatedOrder;

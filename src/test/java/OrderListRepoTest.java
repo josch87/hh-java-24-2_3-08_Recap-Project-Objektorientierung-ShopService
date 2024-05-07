@@ -3,6 +3,7 @@ import org.junit.jupiter.api.Test;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -39,13 +40,13 @@ class OrderListRepoTest {
         repo.addOrder(newOrder);
 
         //WHEN
-        Order actual = repo.getOrderById("1");
+        Optional<Order> actual = repo.getOrderById("1");
 
         //THEN
         Product product1 = new Product("1", "Apfel");
-        Order expected = new Order("1", List.of(product1), fixedTime);
+        Optional<Order> expected = Optional.of(new Order("1", List.of(product1), fixedTime));
 
-        assertEquals(actual, expected);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -57,11 +58,11 @@ class OrderListRepoTest {
         Order newOrder = new Order("1", List.of(product), fixedTime);
 
         //WHEN
-        Order actual = repo.addOrder(newOrder);
+        Optional<Order> actual = Optional.of(repo.addOrder(newOrder));
 
         //THEN
         Product product1 = new Product("1", "Apfel");
-        Order expected = new Order("1", List.of(product1), fixedTime);
+        Optional<Order> expected = Optional.of(new Order("1", List.of(product1), fixedTime));
         assertEquals(actual, expected);
         assertEquals(repo.getOrderById("1"), expected);
     }
@@ -73,8 +74,9 @@ class OrderListRepoTest {
 
         //WHEN
         repo.removeOrder("1");
+        Optional<Order> actual = repo.getOrderById("1");
 
         //THEN
-        assertNull(repo.getOrderById("1"));
+        assertTrue(actual.isEmpty());
     }
 }

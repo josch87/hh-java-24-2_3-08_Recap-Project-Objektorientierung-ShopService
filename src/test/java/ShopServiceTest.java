@@ -1,3 +1,4 @@
+import exceptions.NoSuchOrderException;
 import exceptions.NoSuchProductException;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -37,7 +38,8 @@ class ShopServiceTest {
         List<String> productsIds = List.of("1", "2");
 
         //THEN
-        assertThrowsExactly(NoSuchProductException.class, () -> shopService.addOrder(productsIds));
+        NoSuchProductException exception = assertThrowsExactly(NoSuchProductException.class, () -> shopService.addOrder(productsIds));
+        assertEquals("Product with Id 2 not found.", exception.getMessage());
     }
 
     @Test
@@ -82,7 +84,6 @@ class ShopServiceTest {
         assertEquals(newStatus, actual.status());
     }
 
-    @Disabled
     @Test
     void updateOrderStatusTest_whenOrderDoesNotExist_expectException() {
         //GIVEN
@@ -94,7 +95,8 @@ class ShopServiceTest {
         OrderStatus newStatus = OrderStatus.IN_DELIVERY;
 
         //THEN
-        assertThrowsExactly(NoSuchProductException.class,
+        NoSuchOrderException exception = assertThrowsExactly(NoSuchOrderException.class,
                             () -> shopService.updateOrderStatus(invalidOrderId, newStatus));
+        assertEquals("Order with Id -1 not found.", exception.getMessage());
     }
 }

@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class OrderListRepo implements OrderRepo{
     private List<Order> orders = new ArrayList<>();
@@ -8,13 +9,13 @@ public class OrderListRepo implements OrderRepo{
         return orders;
     }
 
-    public Order getOrderById(String id) {
+    public Optional<Order> getOrderById(String id) {
         for (Order order : orders) {
             if (order.id().equals(id)) {
-                return order;
+                return Optional.of(order);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     public Order addOrder(Order newOrder) {
