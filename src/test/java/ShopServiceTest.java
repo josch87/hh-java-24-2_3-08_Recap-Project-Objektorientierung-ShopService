@@ -1,3 +1,4 @@
+import exceptions.NoSuchOrderException;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -27,11 +28,8 @@ class ShopServiceTest {
         ShopService shopService = new ShopService();
         List<String> productsIds = List.of("1", "2");
 
-        //WHEN
-        Order actual = shopService.addOrder(productsIds);
-
         //THEN
-        assertNull(actual);
+        assertThrowsExactly(NoSuchOrderException.class, () -> shopService.addOrder(productsIds));
     }
 
     @Test
