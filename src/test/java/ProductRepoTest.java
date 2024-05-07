@@ -8,6 +8,7 @@ class ProductRepoTest {
     void getProducts() {
         //GIVEN
         ProductRepo repo = new ProductRepo();
+        repo.addProduct(new Product("1", "Apfel"));
 
         //WHEN
         List<Product> actual = repo.getProducts();
@@ -15,20 +16,22 @@ class ProductRepoTest {
         //THEN
         List<Product> expected = new ArrayList<>();
         expected.add(new Product("1", "Apfel"));
-        assertEquals(actual, expected);
+        assertEquals(expected, actual);
     }
 
     @org.junit.jupiter.api.Test
     void getProductById() {
         //GIVEN
+
         ProductRepo repo = new ProductRepo();
+        repo.addProduct(new Product("1", "Apfel"));
 
         //WHEN
         Optional<Product> actual = repo.getProductById("1");
 
         //THEN
         Optional<Product> expected = Optional.of(new Product("1", "Apfel"));
-        assertEquals(actual, expected);
+        assertEquals(expected, actual);
     }
 
     @org.junit.jupiter.api.Test
@@ -42,7 +45,7 @@ class ProductRepoTest {
 
         //THEN
         Product expected = new Product("2", "Banane");
-        assertEquals(actual, expected);
+        assertEquals(expected, actual);
         assertEquals(repo.getProductById("2").orElseThrow(), expected);
     }
 
