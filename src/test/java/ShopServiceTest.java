@@ -29,7 +29,7 @@ class ShopServiceTest {
     }
 
     @Test
-    void addOrderTest_whenInvalidProductId_expectNull() {
+    void addOrderTest_whenInvalidProductId_expectException() {
         //GIVEN
         ProductRepo productRepo = new ProductRepo();
         productRepo.addProduct(new Product("1", "Apfel"));
