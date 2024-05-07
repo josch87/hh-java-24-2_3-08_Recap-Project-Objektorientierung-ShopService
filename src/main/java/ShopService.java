@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 public class ShopService {
     private ProductRepo productRepo;
     private OrderRepo orderRepo;
+    private IdService idService;
 
     public Order addOrder(List<String> productIds) {
         List<Product> products = new ArrayList<>();
@@ -27,7 +28,7 @@ public class ShopService {
             products.add(productToOrder.get());
         }
 
-        Order newOrder = new Order(UUID.randomUUID().toString(), products, Instant.now());
+        Order newOrder = new Order(idService.generateId(), products, Instant.now());
 
         return orderRepo.addOrder(newOrder);
     }

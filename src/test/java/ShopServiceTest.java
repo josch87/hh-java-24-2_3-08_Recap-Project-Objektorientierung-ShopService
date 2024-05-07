@@ -16,7 +16,8 @@ class ShopServiceTest {
         ProductRepo productRepo = new ProductRepo();
         productRepo.addProduct(new Product("1", "Apfel"));
         OrderRepo orderRepo = new OrderMapRepo();
-        ShopService shopService = new ShopService(productRepo, orderRepo);
+        IdService idService = new IdService();
+        ShopService shopService = new ShopService(productRepo, orderRepo, idService);
         List<String> productsIds = List.of("1");
 
         //WHEN
@@ -34,7 +35,8 @@ class ShopServiceTest {
         ProductRepo productRepo = new ProductRepo();
         productRepo.addProduct(new Product("1", "Apfel"));
         OrderRepo orderRepo = new OrderMapRepo();
-        ShopService shopService = new ShopService(productRepo, orderRepo);
+        IdService idService = new IdService();
+        ShopService shopService = new ShopService(productRepo, orderRepo, idService);
         List<String> productsIds = List.of("1", "2");
 
         //THEN
@@ -48,7 +50,8 @@ class ShopServiceTest {
         ProductRepo productRepo = new ProductRepo();
         productRepo.addProduct(new Product("1", "Apfel"));
         OrderRepo orderRepo = new OrderMapRepo();
-        ShopService shopService = new ShopService(productRepo, orderRepo);
+        IdService idService = new IdService();
+        ShopService shopService = new ShopService(productRepo, orderRepo, idService);
         List<String> productsIds = List.of("1");
 
         Order order1 = shopService.addOrder(productsIds);
@@ -72,7 +75,8 @@ class ShopServiceTest {
         ProductRepo productRepo = new ProductRepo();
         productRepo.addProduct(new Product("1", "Apfel"));
         OrderRepo orderRepo = new OrderMapRepo();
-        ShopService shopService = new ShopService(productRepo, orderRepo);
+        IdService idService = new IdService();
+        ShopService shopService = new ShopService(productRepo, orderRepo, idService);
         List<String> productsIds = List.of("1");
         Order order1 = shopService.addOrder(productsIds);
         OrderStatus newStatus = OrderStatus.IN_DELIVERY;
@@ -90,7 +94,8 @@ class ShopServiceTest {
         ProductRepo productRepo = new ProductRepo();
         productRepo.addProduct(new Product("1", "Apfel"));
         OrderRepo orderRepo = new OrderMapRepo();
-        ShopService shopService = new ShopService(productRepo, orderRepo);
+        IdService idService = new IdService();
+        ShopService shopService = new ShopService(productRepo, orderRepo, idService);
         String invalidOrderId = "-1";
         OrderStatus newStatus = OrderStatus.IN_DELIVERY;
 

@@ -7,13 +7,14 @@ public class Main {
     public static void main(String[] args) {
         OrderRepo orderRepo = new OrderMapRepo();
         ProductRepo productRepo = new ProductRepo();
+        IdService idService = new IdService();
 
-        Product mueckenspray = productRepo.addProduct(new Product(UUID.randomUUID().toString(), "Mückenspray"));
+        Product mueckenspray = productRepo.addProduct(new Product(idService.generateId(), "Mückenspray"));
         Product kuechenrolle = productRepo.addProduct(new Product(UUID.randomUUID().toString(), "Küchenrolle"));
         Product klopapier = productRepo.addProduct(new Product(UUID.randomUUID().toString(), "Klopapier"));
         Product fernseher = productRepo.addProduct(new Product(UUID.randomUUID().toString(), "Fernseher"));
 
-        ShopService shopService = new ShopService(productRepo, orderRepo);
+        ShopService shopService = new ShopService(productRepo, orderRepo, idService);
 
         System.out.println(shopService);
 
