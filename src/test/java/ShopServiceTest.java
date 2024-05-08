@@ -70,6 +70,29 @@ class ShopServiceTest {
     }
 
     @Test
+    void getOrdersByStatusTest_whenStatusCompleted_expectEmptyList() {
+        //GIVEN
+        ProductRepo productRepo = new ProductRepo();
+        productRepo.addProduct(new Product("1", "Apfel"));
+        OrderRepo orderRepo = new OrderMapRepo();
+        IdService idService = new IdService();
+        ShopService shopService = new ShopService(productRepo, orderRepo, idService);
+        List<String> productsIds = List.of("1");
+
+        Order order1 = shopService.addOrder(productsIds);
+        Order order2 = shopService.addOrder(productsIds);
+        Order order3 = shopService.addOrder(productsIds);
+
+        shopService.updateOrderStatus(order1.id(), OrderStatus.IN_DELIVERY);
+
+        //WHEN
+        List<Order> actual = shopService.getOrdersByOrderStatus(OrderStatus.COMPLETED);
+
+        //THEN
+        assertTrue(actual.isEmpty());
+    }
+
+    @Test
     void updateOrderStatusTest_whenOrderExists_expectStatusUpdated() {
         //GIVEN
         ProductRepo productRepo = new ProductRepo();
