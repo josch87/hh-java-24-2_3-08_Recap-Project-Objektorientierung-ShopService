@@ -53,6 +53,7 @@ class ProductRepoTest {
     void removeProduct() {
         //GIVEN
         ProductRepo repo = new ProductRepo();
+        repo.addProduct(new Product("1", "Apfel"));
 
         //WHEN
         repo.removeProduct("1");
