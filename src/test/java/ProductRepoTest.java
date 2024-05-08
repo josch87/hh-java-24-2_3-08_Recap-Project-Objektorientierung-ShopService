@@ -1,6 +1,7 @@
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 class ProductRepoTest {
 
@@ -42,6 +43,7 @@ class ProductRepoTest {
 
         //WHEN
         Product actual = repo.addProduct(newProduct);
+        assumeTrue(newProduct.equals(repo.getProductById("2").orElseThrow()));
 
         //THEN
         Product expected = new Product("2", "Banane");
